@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import SimpleStorageContract from "./contracts/SimpleStorage.json";
-import getWeb3 from "./utils/getWeb3";
-import truffleContract from "truffle-contract";
+import React, { Component } from 'react';
+import SimpleStorageContract from './contracts/SimpleStorage.json';
+import getWeb3 from './utils/getWeb3';
+import truffleContract from 'truffle-contract';
 
-import "./App.css";
+import './App.css';
 
 class App extends Component {
   state = { value: 0, contractValue: 0, web3: null, accounts: null, contract: null };
@@ -26,9 +26,7 @@ class App extends Component {
       this.setState({ web3, accounts, contract: instance }, this.fetchValue);
     } catch (error) {
       // Catch any errors for any of the above operations.
-      alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`
-      );
+      alert(`Failed to load web3, accounts, or contract. Check console for details.`);
       console.log(error);
     }
   };
@@ -43,18 +41,31 @@ class App extends Component {
     this.setState({ contractValue: response.toNumber() });
   };
 
+  onChangeSafe = async (e) => {
+    this.setState({ safe: e.target.value });
+  };
+
+  // onSubmitSafe = async (e) => {
+  //   e.preventDefault();
+  //   const { accounts, contract } = this.state;
+
+  //   // await contract.set(this.state.safe, { from: accounts[0] });
+  //   // const response = await contract.get();
+  //   // this.setState({ contractValue: response.toNumber() });
+  // };
+
   onChange = async (e) => {
-    this.setState({ value: e.target.value })
-  }
+    this.setState({ value: e.target.value });
+  };
 
   onSubmit = async (e) => {
-    e.preventDefault()
-    const { accounts, contract } = this.state
+    e.preventDefault();
+    const { accounts, contract } = this.state;
 
-    await contract.set(this.state.value, { from: accounts[0] })
-    const response = await contract.get()
+    await contract.set(this.state.value, { from: accounts[0] });
+    const response = await contract.get();
     this.setState({ contractValue: response.toNumber() });
-  }
+  };
 
   render() {
     if (!this.state.web3) {
@@ -64,9 +75,16 @@ class App extends Component {
       <div className="App">
         <h1>Hermes Network</h1>
         <h2>Try out Hermes the Executor</h2>
+        <form onSubmit={this.onSubmitSafe}>
+          <label>
+            Your Safe address:
+            <input type="text" name="value" onChange={this.onChangeSafe} />
+          </label>
+          {/* <input type="submit" value="Submit" /> */}
+        </form>
         <form onSubmit={this.onSubmit}>
           <label>
-            Value:
+            Desired value:
             <input type="text" name="value" onChange={this.onChange} />
           </label>
           <input type="submit" value="Submit" />
