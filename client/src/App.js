@@ -58,7 +58,7 @@ class App extends Component {
     e.preventDefault();
     const { accounts, contract } = this.state;
 
-    let data = '0xff';
+    let data = contract.contract.methods.set(this.state.value).encodeABI();
 
     await this.state.hermes.sendMessage(
       contract.address,
