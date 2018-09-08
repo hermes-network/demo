@@ -2,16 +2,20 @@ import React, { Component } from 'react';
 import SimpleStorageContract from './contracts/SimpleStorage.json';
 import getWeb3 from './utils/getWeb3';
 import truffleContract from 'truffle-contract';
+import Hermes from './hermesjs/index';
 
 import './App.css';
 
 class App extends Component {
-  state = { value: 0, contractValue: 0, web3: null, accounts: null, contract: null };
+  state = { value: 0, contractValue: 0, web3: null, accounts: null, contract: null, safe: null, hermes: null };
 
   componentDidMount = async () => {
     try {
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
+
+      const hermes = new Hermes(web3.currentProvider);
+      await hermes.initialize();
 
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
@@ -23,7 +27,7 @@ class App extends Component {
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance }, this.fetchValue);
+      this.setState({ web3, accounts, contract: instance, hermes }, this.fetchValue);
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(`Failed to load web3, accounts, or contract. Check console for details.`);
@@ -42,17 +46,9 @@ class App extends Component {
   };
 
   onChangeSafe = async (e) => {
+    this.state.hermes.setSafeAddress(e.target.value);
     this.setState({ safe: e.target.value });
   };
-
-  // onSubmitSafe = async (e) => {
-  //   e.preventDefault();
-  //   const { accounts, contract } = this.state;
-
-  //   // await contract.set(this.state.safe, { from: accounts[0] });
-  //   // const response = await contract.get();
-  //   // this.setState({ contractValue: response.toNumber() });
-  // };
 
   onChange = async (e) => {
     this.setState({ value: e.target.value });
@@ -62,9 +58,13 @@ class App extends Component {
     e.preventDefault();
     const { accounts, contract } = this.state;
 
-    await contract.set(this.state.value, { from: accounts[0] });
-    const response = await contract.get();
-    this.setState({ contractValue: response.toNumber() });
+    let data = '0xff';
+
+    await this.state.hermes.sendMessage(
+      contract.address,
+      0,
+      data,
+    );
   };
 
   render() {
