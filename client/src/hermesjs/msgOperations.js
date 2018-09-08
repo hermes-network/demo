@@ -20,19 +20,19 @@ export function createMsgHash(
     v: data
   });
 
-  console.log(data.length);
-  console.log(dataHash);
-
-  return Web3.utils.soliditySha3(
+  const txHash = Web3.utils.soliditySha3(
     { t: 'bytes32', v: SAFE_TX_TYPEHASH },
     { t: 'address', v: to },
     { t: 'uint256', v: value },
     { t: 'bytes32', v: dataHash },
     { t: 'uint256', v: operation },
     { t: 'uint256', v: safeTxGas },
+    { t: 'uint256', v: dataGas },
     { t: 'uint256', v: gasPrice },
     { t: 'address', v: gasToken },
     { t: 'address', v: refundReceiver },
     { t: 'uint256', v: nonce }
   );
+
+  return txHash
 }

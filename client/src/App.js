@@ -7,7 +7,7 @@ import Hermes from './hermesjs/index';
 import './App.css';
 
 class App extends Component {
-  state = { value: 0, contractValue: 0, web3: null, accounts: null, contract: null, safe: null, hermes: null };
+  state = { value: 0, contractValue: 0, web3: null, accounts: null, contract: null, hermes: null };
 
   componentDidMount = async () => {
     try {
@@ -46,8 +46,7 @@ class App extends Component {
   };
 
   onChangeSafe = async (e) => {
-    this.state.hermes.setSafeAddress(e.target.value);
-    this.setState({ safe: e.target.value });
+    await this.state.hermes.setSafeAddress(e.target.value);
   };
 
   onChange = async (e) => {
