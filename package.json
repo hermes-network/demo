@@ -10,7 +10,9 @@
     "gnosis-safe": "git+https://github.com/hermes-network/safe-contracts.git",
     "truffle": "^4.1.14"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "truffle-hdwallet-provider": "0.0.6"
+  },
   "scripts": {
     "test": "truffle test"
   },
