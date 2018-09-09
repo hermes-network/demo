@@ -59,11 +59,7 @@ class App extends Component {
 
     let data = contract.contract.methods.set(this.state.value).encodeABI();
 
-    await this.state.hermes.sendMessage(
-      contract.address,
-      0,
-      data,
-    );
+    await this.state.hermes.sendMessage(contract.address, 0, data);
   };
 
   render() {
@@ -72,23 +68,36 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <h1>Hermes Network</h1>
-        <h2>Try out Hermes the Executor</h2>
+        <img
+          className="eth-logo"
+          src="https://cdn.iconscout.com/icon/free/png-512/ethereum-15-646027.png"
+        />
+        <h1 className="title">Hermes Network</h1>
+        <h2 className="subtitle">ETH-Berlin relay executors project</h2>
         <form onSubmit={this.onSubmitSafe}>
-          <label>
-            Your Safe address:
-            <input type="text" name="value" onChange={this.onChangeSafe} />
-          </label>
+          <input
+            className="form__field"
+            type="text"
+            name="value"
+            onChange={this.onChangeSafe}
+            placeholder="Safe-contract address"
+            autocomplete="off"
+          />
           {/* <input type="submit" value="Submit" /> */}
         </form>
-        <form onSubmit={this.onSubmit}>
-          <label>
-            Desired value:
-            <input type="text" name="value" onChange={this.onChange} />
-          </label>
-          <input type="submit" value="Submit" />
+        <form className="value-form" onSubmit={this.onSubmit}>
+          <input
+            id="value-input"
+            className="form__field"
+            type="text"
+            name="value"
+            onChange={this.onChange}
+            placeholder="Set new stored value"
+            autocomplete="off"
+          />
+          <input className="btn" type="submit" value="Submit" />
         </form>
-        <div>The on-chain stored value is: {this.state.contractValue}</div>
+        <div className="indicator">The on-chain stored value is: {this.state.contractValue}</div>
       </div>
     );
   }
