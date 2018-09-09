@@ -7,7 +7,7 @@
     "test": "test"
   },
   "dependencies": {
-    "gnosis-safe": "git+https://github.com/hermes-network/safe-contracts.git",
+    "gnosis-safe": "git+https://github.com/hermes-network/safe-contracts.git#development",
     "truffle": "^4.1.14"
   },
   "devDependencies": {},

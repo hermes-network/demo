@@ -1,3 +1,4 @@
+import ethutils from 'ethereumjs-util'
 import Web3 from 'web3';
 import Contract from 'truffle-contract';
 
@@ -50,6 +51,7 @@ export class HermesJS {
       refundReceiver,
       nonce
     );*/
+    nonce = await this.safe.nonce();
     let msgHash = await this.safe.getTransactionHash(
       to,
       value,
@@ -65,7 +67,9 @@ export class HermesJS {
     console.log('msg hash:', msgHash)
     let account = (await this.web3.eth.getAccounts())[0]
     let signedMessage = await this.web3.eth.personal.sign(msgHash, account);
-    console.log('signed message', signedMessage)
+    let rpcSig = ethutils.fromRpcSig(signedMessage);
+    let signature = '0x' + rpcSig.r.toString('hex') + rpcSig.s.toString('hex') + rpcSig.v.toString(16);
+    console.log('signed message', signedMessage, rpcSig, signature)
 
     let toSend = {
       SAFE_TX_TYPEHASH: SAFE_TX_TYPEHASH,
@@ -79,7 +83,7 @@ export class HermesJS {
       refundReceiver: refundReceiver,
       nonce: nonce,
       safeAddress: this.safeAddress,
-      signedMessage: signedMessage
+      signedMessage: signature
     };
 
     await this.publisher.send(toSend);
