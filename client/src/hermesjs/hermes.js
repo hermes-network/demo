@@ -36,8 +36,7 @@ export class HermesJS {
     dataGas = 0,
     gasPrice = 0,
     gasToken = '0x0000000000000000000000000000000000000000',
-    refundReceiver = '0x0000000000000000000000000000000000000000',
-    nonce = 0
+    refundReceiver = '0x0000000000000000000000000000000000000000'
   ) {
     /*let msgHash = createMsgHash(
       to,
@@ -51,7 +50,7 @@ export class HermesJS {
       refundReceiver,
       nonce
     );*/
-    nonce = await this.safe.nonce();
+    let nonce = await this.safe.nonce();
     let msgHash = await this.safe.getTransactionHash(
       to,
       value,
@@ -78,6 +77,7 @@ export class HermesJS {
       data: data,
       operation: operation,
       safeTxGas: safeTxGas,
+      dataGas: dataGas,
       gasPrice: gasPrice,
       gasToken: gasToken,
       refundReceiver: refundReceiver,
