@@ -1,3 +1,13 @@
 .App {
   text-align: center;
 }
+
+.App .value-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.App .value-form input {
+  margin-right: 10px;
+}

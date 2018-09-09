@@ -87,7 +87,7 @@ class App extends Component {
         />
         <h1 className="title">Hermes, The Executor :)</h1>
         <h2 className="subtitle">Layer 2 execution market</h2>
-        <form onSubmit={this.onSubmitSafe}>
+        <form className="value-form" onSubmit={this.onSubmit}>
           <input
             className="form__field"
             type="text"
@@ -96,10 +96,7 @@ class App extends Component {
             placeholder="Safe-contract address"
             autoComplete="off"
           />
-          {/* <input type="submit" value="Submit" /> */}
-        </form>
-        <form className="value-form" onSubmit={this.onSubmit}>
-          <input
+        <input
             id="value-input"
             className="form__field"
             type="text"
