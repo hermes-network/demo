@@ -61,16 +61,14 @@ class App extends Component {
 
     let data = contract.contract.methods.set(this.state.value).encodeABI();
     const gasPrice = this.state.web3.utils.toWei('10', 'gwei')
-    const reward = 50
+    const reward = 20
 
     await this.state.hermes.sendMessage(
       contract.address,
       0,
       data,
       0,
-      0,
-      reward,
-      gasPrice
+      0
     );
   };
 
