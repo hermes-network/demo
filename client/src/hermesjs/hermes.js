@@ -38,18 +38,6 @@ export class HermesJS {
     gasToken = '0x0000000000000000000000000000000000000000',
     refundReceiver = '0x0000000000000000000000000000000000000000'
   ) {
-    /*let msgHash = createMsgHash(
-      to,
-      value,
-      data,
-      operation,
-      safeTxGas,
-      dataGas,
-      gasPrice,
-      gasToken,
-      refundReceiver,
-      nonce
-    );*/
     let nonce = await this.safe.nonce();
     let msgHash = await this.safe.getTransactionHash(
       to,
@@ -64,6 +52,7 @@ export class HermesJS {
       nonce
     )
     console.log('msg hash:', msgHash)
+
     let account = (await this.web3.eth.getAccounts())[0]
     let signedMessage = await this.web3.eth.personal.sign(msgHash, account);
     let rpcSig = ethutils.fromRpcSig(signedMessage);

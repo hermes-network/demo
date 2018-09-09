@@ -5,7 +5,7 @@ export default class Publisher {
   constructor(web3) {
     this.web3 = web3
     this.shh = new Shh('ws://eth.oja.me:8547');
-    this.appName = Web3Utils.asciiToHex('hermes-network').slice(0, 10);
+    this.appName = Web3Utils.asciiToHex('ropsten-hermes').slice(0, 10);
   }
 
   async initialize() {
@@ -25,7 +25,7 @@ export default class Publisher {
     };
 
     const result = await this.shh.post(message);
-    console.log(result);
+
     return result;
   }
 }

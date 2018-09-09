@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import SimpleStorageContract from './contracts/SimpleStorage.json';
-import getWeb3 from './utils/getWeb3';
 import truffleContract from 'truffle-contract';
+
+import getWeb3 from './utils/getWeb3';
 import Hermes from './hermesjs/index';
+
+import SimpleStorageContract from './contracts/SimpleStorage.json';
 
 import './App.css';
 
@@ -59,21 +61,28 @@ class App extends Component {
 
     let data = contract.contract.methods.set(this.state.value).encodeABI();
 
-    await this.state.hermes.sendMessage(contract.address, 0, data);
+    await this.state.hermes.sendMessage(
+      contract.address,
+      0,
+      data,
+      0,
+      0
+    );
   };
 
   render() {
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
+
     return (
       <div className="App">
         <img
           className="eth-logo"
           src="https://cdn.iconscout.com/icon/free/png-512/ethereum-15-646027.png"
         />
-        <h1 className="title">Hermes Network</h1>
-        <h2 className="subtitle">ETH-Berlin relay executors project</h2>
+        <h1 className="title">Hermes, The Executor :)</h1>
+        <h2 className="subtitle">Layer 2 execution market</h2>
         <form onSubmit={this.onSubmitSafe}>
           <input
             className="form__field"
@@ -81,7 +90,7 @@ class App extends Component {
             name="value"
             onChange={this.onChangeSafe}
             placeholder="Safe-contract address"
-            autocomplete="off"
+            autoComplete="off"
           />
           {/* <input type="submit" value="Submit" /> */}
         </form>
@@ -93,7 +102,7 @@ class App extends Component {
             name="value"
             onChange={this.onChange}
             placeholder="Set new stored value"
-            autocomplete="off"
+            autoComplete="off"
           />
           <input className="btn" type="submit" value="Submit" />
         </form>
