@@ -1,6 +1,5 @@
 import Web3 from 'web3';
 import ethUtils from 'ethereumjs-util';
-import abi from 'ethereumjs-abi';
 
 export function createMsgHash(
   to,
