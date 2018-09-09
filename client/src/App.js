@@ -60,13 +60,17 @@ class App extends Component {
     const { accounts, contract } = this.state;
 
     let data = contract.contract.methods.set(this.state.value).encodeABI();
+    const gasPrice = this.state.web3.utils.toWei('10', 'gwei')
+    const reward = 50
 
     await this.state.hermes.sendMessage(
       contract.address,
       0,
       data,
       0,
-      0
+      0,
+      reward,
+      gasPrice
     );
   };
 
